@@ -1,12 +1,11 @@
 [world]
 color_rgba = [ 0x22, 0x22, 0x22, 0xff ]
-canvas_width_px = 160
-canvas_height_px = 90
+canvas_width_px = 800
+canvas_height_px = 450
 min_n_cells = 10
 
 [grid]
 color_rgba = [ 0x44, 0x44, 0x44, 0xff ]
-line_width_px = 1
 
 [cells]
 color_rgba = [ 0xaa, 0x00, 0x00, 0xff ]

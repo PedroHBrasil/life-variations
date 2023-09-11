@@ -8,9 +8,9 @@ pub struct Grid {
 }
 
 impl Grid {
-    pub fn new(cell_size: u16, canvas_width: u16, canvas_height: u16, line_weight: u16, color: Rgba<u8>) -> Self {
+    pub fn new(cell_size: u16, canvas_width: u16, canvas_height: u16, color: Rgba<u8>) -> Self {
         let offset = Grid::calc_offset(cell_size, canvas_width, canvas_height);
-        let separators = Grid::make_separators(cell_size, canvas_width, canvas_height, line_weight, color, offset);
+        let separators = Grid::make_separators(cell_size, canvas_width, canvas_height, color, offset);
 
         Self { separators, color }
     }
@@ -24,14 +24,14 @@ impl Grid {
         (offset_horz, offset_vert)
     }
 
-    fn make_separators(cell_size: u16, canvas_width: u16, canvas_height: u16, line_weight: u16, color: Rgba<u8>, offset: (u16, u16)) -> Vec<Separator> {
-        let mut separators = Grid::make_vert_separators(cell_size, canvas_width, canvas_height, line_weight, color, offset);
-        separators.append(&mut Grid::make_horz_separators(cell_size, canvas_width, canvas_height, line_weight, color, offset));
+    fn make_separators(cell_size: u16, canvas_width: u16, canvas_height: u16, color: Rgba<u8>, offset: (u16, u16)) -> Vec<Separator> {
+        let mut separators = Grid::make_vert_separators(cell_size, canvas_width, canvas_height, color, offset);
+        separators.append(&mut Grid::make_horz_separators(cell_size, canvas_width, canvas_height, color, offset));
 
         separators
     }
 
-    fn make_vert_separators(cell_size: u16, canvas_width: u16, canvas_height: u16, line_weight: u16, color: Rgba<u8>, offset: (u16, u16)) -> Vec<Separator> {
+    fn make_vert_separators(cell_size: u16, canvas_width: u16, canvas_height: u16, color: Rgba<u8>, offset: (u16, u16)) -> Vec<Separator> {
         let mut separators = Vec::new();
         let n_cells_row = canvas_height / cell_size;
         let n_sep_vert = canvas_width / cell_size - 1;
@@ -44,7 +44,7 @@ impl Grid {
         separators
     }
 
-    fn make_horz_separators(cell_size: u16, canvas_width: u16, canvas_height: u16, line_weight: u16, color: Rgba<u8>, offset: (u16, u16)) -> Vec<Separator> {
+    fn make_horz_separators(cell_size: u16, canvas_width: u16, canvas_height: u16, color: Rgba<u8>, offset: (u16, u16)) -> Vec<Separator> {
         let mut separators = Vec::new();
         let n_cells_col = canvas_width / cell_size;
         let n_sep_horz = canvas_height / cell_size - 1;

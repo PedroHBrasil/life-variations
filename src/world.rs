@@ -46,7 +46,6 @@ impl World {
             cell_size,
             config.world.canvas_width_px,
             config.world.canvas_height_px,
-            config.grid.line_width_px,
             Rgba(config.grid.color_rgba));
 
         grid

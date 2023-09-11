@@ -19,7 +19,6 @@ pub struct WorldConfig {
 #[derive(Deserialize)]
 pub struct GridConfig {
     pub color_rgba: [u8; 4],
-    pub line_width_px: u16,
 }
 
 #[derive(Deserialize)]
