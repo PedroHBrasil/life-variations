@@ -35,10 +35,10 @@ impl World {
     fn calc_cell_size(config: &Config) -> u16 {
         let cell_size = cmp::min(
             config.world.canvas_width_px,
-            config.world.canvas_height_px)
-            / config.world.min_n_cells;
+            config.world.canvas_height_px) as f32
+            / config.world.min_n_cells as f32;
 
-        cell_size
+        cell_size as u16
     }
 
     fn make_grid(config: &Config, cell_size: u16) -> grid::Grid {
@@ -85,6 +85,7 @@ impl World {
         let mut canvas = RgbaImage::new(self.width as u32, self.height as u32);
         let rect = Rect::at(0, 0).of_size(self.width as u32, self.height as u32);
         draw_filled_rect_mut(&mut canvas, rect, self.color);
+        self.grid.draw(&mut canvas);
         canvas.save("test.png").unwrap();
     }
 }
