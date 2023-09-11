@@ -2,7 +2,7 @@ mod life_cell;
 mod grid;
 mod separator;
 
-use std::cmp;
+use std::{cmp, thread, time::Duration};
 
 use image::{Rgba, RgbaImage};
 use imageproc::{rect::Rect, drawing::draw_filled_rect_mut};
@@ -88,6 +88,56 @@ impl World {
         }
 
         cell_row
+    }
+
+    pub fn run(&mut self, n_steps: u16) {
+        self.draw();
+        for step in 0..n_steps {
+            thread::sleep(Duration::from_millis(1000));
+            self.update_cells();
+            self.draw();
+        }
+    }
+
+    fn update_cells(&mut self) {
+        let cells_alive_neighbors_count = self.count_cells_alive_neighbors();
+
+        for i in 0..self.cells.len() {
+            for j in 0..self.cells[i].len() {
+                self.cells[i][j].update_is_alive(cells_alive_neighbors_count[i][j]);
+            }
+        }
+    }
+
+    fn count_cells_alive_neighbors(&self) -> Vec<Vec<u8>> {
+        let mut cells_alive_neighbors = Vec::new();
+        for i in 0..self.cells.len() {
+            let mut cells_alive_neighbors_row = Vec::new();
+            for j in 0..self.cells[i].len() {
+                cells_alive_neighbors_row.push(self.count_cell_alive_neighbors(i, j));
+            }
+            cells_alive_neighbors.push(cells_alive_neighbors_row);
+        }
+
+        cells_alive_neighbors
+    }
+
+    fn count_cell_alive_neighbors(&self, i: usize, j: usize) -> u8 {
+        // Determines next and previous cell indices assuming a full loop world
+        let i_prev = if i == 0 { self.cells.len() - 1 } else { i - 1 };
+        let j_prev = if j == 0 { self.cells[i].len() - 1 } else { j - 1 };
+        let i_next = if i == self.cells.len() - 1 { 0 } else { i + 1 };
+        let j_next = if j == self.cells[i].len() - 1 { 0 } else { j + 1 };
+        // Counts alive neighbors
+        let mut count = 0;
+        for i_cur in [i_prev, i, i_next] {
+            for j_cur in [j_prev, j, j_next] {
+                if i_cur == i && j_cur == j { continue }
+                if self.cells[i_cur][j_cur].is_alive { count += 1 }
+            }
+        }
+
+        count
     }
 
     pub fn draw(&self) {
