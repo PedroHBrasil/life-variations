@@ -29,7 +29,7 @@ impl Separator {
     }
 
     /// Draws the separator on an image
-    pub fn draw(&self, canvas: &mut RgbaImage) -> () {
+    pub fn draw(&self, canvas: &mut RgbaImage) {
         draw_antialiased_line_segment_mut(canvas, self.start, self.end, self.color, interpolate);
     }
 }

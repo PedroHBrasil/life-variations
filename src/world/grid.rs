@@ -8,21 +8,12 @@ pub struct Grid {
 }
 
 impl Grid {
-    pub fn new(cell_size: u16, canvas_width: u16, canvas_height: u16, color: Rgba<u8>) -> Self {
-        let offset = Grid::calc_offset(cell_size, canvas_width, canvas_height);
+    pub fn new(cell_size: u16, canvas_width: u16, canvas_height: u16, color: Rgba<u8>, offset: (u16, u16)) -> Self {
         let separators = Grid::make_separators(cell_size, canvas_width, canvas_height, color, offset);
 
         Self { separators, color }
     }
 
-    fn calc_offset(cell_size: u16, canvas_width: u16, canvas_height: u16) -> (u16, u16) {
-        let n_cells_row = canvas_height / cell_size;
-        let n_cells_col = canvas_width / cell_size;
-        let offset_horz = (canvas_height - (n_cells_row * cell_size)) / 2;
-        let offset_vert = (canvas_width - (n_cells_col * cell_size)) / 2;
-
-        (offset_horz, offset_vert)
-    }
 
     fn make_separators(cell_size: u16, canvas_width: u16, canvas_height: u16, color: Rgba<u8>, offset: (u16, u16)) -> Vec<Separator> {
         let mut separators = Grid::make_vert_separators(cell_size, canvas_width, canvas_height, color, offset);
