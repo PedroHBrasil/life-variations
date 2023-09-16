@@ -3,15 +3,14 @@ use image::{Rgba, RgbaImage};
 use super::separator::Separator;
 
 pub struct Grid {
-    separators: Vec<Separator>,
-    color: Rgba<u8>,
+    separators: Vec<Separator>
 }
 
 impl Grid {
     pub fn new(cell_size: u16, canvas_width: u16, canvas_height: u16, color: Rgba<u8>, offset: (u16, u16)) -> Self {
         let separators = Grid::make_separators(cell_size, canvas_width, canvas_height, color, offset);
 
-        Self { separators, color }
+        Self { separators}
     }
 
 
