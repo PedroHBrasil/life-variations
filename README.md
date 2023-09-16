@@ -1,6 +1,6 @@
-# Life Wallpaper
+# Life Variations
 
-A tool that sets the wallpaper of my computer to a simulation based on Conway's Game of Life.
+A website that displays variations of Conway's Game of Life according to user setup.
 
 ## Class Diagram
 
